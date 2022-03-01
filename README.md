@@ -6,9 +6,9 @@ Trying to implement [Wordle](https://www.nytimes.com/games/wordle/index.html) us
 The goal:
 
 ```ts
-type secret = ['v', 'i', 'v', 'i', 'd'];
-type guess =  ['w', 'i', 'n', 'd', 'y'];
-type result = Result<guess, secret>;
+type secret = 'vivid';
+type guess =  'windy';
+type result = WordleResult<guess, secret>;
 const x: result = '-g-y-'; // ⬛🟩⬛🟨⬛, no type error
 const x2: result = '-g---'; // type error! '-g---' is not assignable to '-g-y-'
 ```

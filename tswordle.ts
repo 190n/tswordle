@@ -1,26 +1,27 @@
-// green, yellow, gray
-type ResultCharacter = 'g' | 'y' | '-';
-export type ResultString = [ResultCharacter, ResultCharacter, ResultCharacter, ResultCharacter, ResultCharacter];
+// https://github.com/microsoft/TypeScript/pull/40336
+// via https://gist.github.com/jet2jet/5b06e87fd20d20a5dac93bf5b5965722
+type Split<S extends string, D extends string> =
+	string extends S ? string[] :
+	S extends '' ? [] :
+	S extends `${infer T}${D}${infer U}` ? [T, ...Split<U, D>] :
+	[S];
 
-export type FiveLetter = [string, string, string, string, string];
-export type FiveLetterIndex = 0 | 1 | 2 | 3 | 4;
-
-type IsGreen<guess extends FiveLetter, secret extends FiveLetter, i extends FiveLetterIndex> =
+type IsGreen<guess extends string[], secret extends string[], i extends number> =
 	secret[i] extends guess[i] ? true : false;
 
-type IsYellow<guess extends FiveLetter, secret extends FiveLetter, i extends FiveLetterIndex> =
+type IsYellow<guess extends string[], secret extends string[], i extends number> =
 	true;
 
-type ResultInString<guess extends FiveLetter, secret extends FiveLetter, i extends FiveLetterIndex> =
+type ResultInString<guess extends string[], secret extends string[], i extends number> =
 	IsGreen<guess, secret, i> extends true ? 'g' : (
 		IsYellow<guess, secret, i> extends true ? 'y' : '-'
 	);
 
-type Result<guess extends FiveLetter, secret extends FiveLetter> =
-	`${ResultInString<guess, secret, 0>}\
-${ResultInString<guess, secret, 1>}\
-${ResultInString<guess, secret, 2>}\
-${ResultInString<guess, secret, 3>}\
-${ResultInString<guess, secret, 4>}`;
+export type WordleResult<guess extends string, secret extends string> =
+	`${ResultInString<Split<guess, ''>, Split<secret, ''>, 0>}\
+${ResultInString<Split<guess, ''>, Split<secret, ''>, 1>}\
+${ResultInString<Split<guess, ''>, Split<secret, ''>, 2>}\
+${ResultInString<Split<guess, ''>, Split<secret, ''>, 3>}\
+${ResultInString<Split<guess, ''>, Split<secret, ''>, 4>}`;
 
-type PositChoke = Result<['c', 'l', 'o', 'v', 'e'], ['c', 'h', 'o', 'k', 'e']>;
+type CloveChoke = WordleResult<'clove', 'choke'>;
