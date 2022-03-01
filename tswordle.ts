@@ -9,6 +9,13 @@ type Split<S extends string, D extends string> =
 type IsGreen<guess extends string[], secret extends string[], i extends number> =
 	secret[i] extends guess[i] ? true : false;
 
+type Decrement = { [5]: 4 };
+
+type CountUpTo<word extends string[], char extends string, upTo extends number> =
+	Pick<word, Omit<keyof word, 0>>;
+
+const x: CountUpTo<['a'], 'b', 4> = 'b';
+
 type IsYellow<guess extends string[], secret extends string[], i extends number> =
 	true;
 
