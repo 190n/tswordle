@@ -1,5 +1,3 @@
-import type { FiveLetter, FiveLetterIndex, ResultString } from './tswordle';
-
 // ..[x].. guess
 // ..[x].. secret
 // YES
@@ -11,20 +9,14 @@ import type { FiveLetter, FiveLetterIndex, ResultString } from './tswordle';
 // x[x]... guess
 // x[y].x. secret
 // YES
-function isYellow(guess: FiveLetter, secret: FiveLetter, index: FiveLetterIndex): boolean {
-	for (let i: FiveLetterIndex = 0; i < 5; i++) {
-
-	}
-
-	if (secret.includes(guess[index])) {
-		return true;
-	} else {
-		return false;
-	}
+function isYellow(guess: string, secret: string, index: number): boolean {
+	const numInSecret = [...secret].reduce((count, c) => c == guess[index] ? (count + 1) : count, 0),
+		indexInGuess = [...guess].reduce((count, c, i) => (c == guess[index] && i <= index) ? (count + 1) : count, 0);
+	return secret.includes(guess[index]) && indexInGuess <= numInSecret;
 }
 
-function runtimeResult(guess: FiveLetter, secret: FiveLetter): ResultString {
-	return guess.map((c, i) => c == secret[i] ? 'g' : (isYellow(guess, secret, i as FiveLetterIndex) ? 'y' : '-')) as ResultString;
+function runtimeResult(guess: string, secret: string): string {
+	return [...guess].map((c, i) => c == secret[i] ? 'g' : (isYellow(guess, secret, i) ? 'y' : '-')).join('');
 }
 
 interface WordleTest {
@@ -36,7 +28,7 @@ interface WordleTest {
 function check({ secret, guesses, results }: WordleTest) {
 	for (const i in guesses) {
 		const g = guesses[i];
-		const result = runtimeResult(g.split('') as FiveLetter, secret.split('') as FiveLetter).join('');
+		const result = runtimeResult(g, secret);
 		console.log(result);
 		console.assert(result == results[i]);
 	}
