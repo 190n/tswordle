@@ -44,7 +44,14 @@ const vivid = {
 	secret: 'vivid',
 	guesses: ['craft', 'house', 'glide', 'windy', 'lipid', 'vivid', 'piing', 'xviii'],
 	results: ['-----', '-----', '--yy-', '-g-y-', '-g-gg', 'ggggg', '-gy--', '-yyg-'],
+};
+
+const mar1 = {
+	secret: 'rupee',
+	guesses: ['audio', 'crest', 'ruler', 'rupee'],
+	results: ['-g---', '-yy--', 'gg-g-', 'ggggg'],
 }
 
 check(feb28);
 check(vivid);
+check(mar1);
