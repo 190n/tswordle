@@ -8,7 +8,7 @@ The goal:
 ```ts
 type secret = ['v', 'i', 'v', 'i', 'd'];
 type guess =  ['w', 'i', 'n', 'd', 'y'];
-type result = Flatten<Result<guess, secret>>;
+type result = Result<guess, secret>;
 const x: result = '-g-y-'; // ⬛🟩⬛🟨⬛, no type error
 const x2: result = '-g---'; // type error! '-g---' is not assignable to '-g-y-'
 ```

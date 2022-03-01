@@ -24,5 +24,3 @@ ${ResultInString<guess, secret, 3>}\
 ${ResultInString<guess, secret, 4>}`;
 
 type PositChoke = Result<['c', 'l', 'o', 'v', 'e'], ['c', 'h', 'o', 'k', 'e']>;
-
-type Flatten<T extends FiveLetter> = `${T[0]}${T[1]}${T[2]}${T[3]}${T[4]}`;
